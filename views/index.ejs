@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+
+<body>
+    <center>
+        <h1>Todo List App</h1>
+        <br>
+        <form action="/add" method="POST">
+            <table>
+                <tr>
+                    <td><label for="title">Title:</label></td>
+                    <td><input type="text" id="title" name="title" required></td>
+                </tr>
+                <tr>
+                    <td><label for="description">Description:</label></td>
+                    <td><input type="text" id="description" name="description" required></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit">Add Todo</button></td>
+                </tr>
+            </table>
+        </form>
+        <h2>Todo List</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% todos.forEach(function(todo) { %>
+                    <tr>
+                        <td>
+                            <%= todo.title %>
+                        </td>
+                        <td>
+                            <%= todo.description %>
+                        </td>
+                        <td>
+                            <%= todo.isComplete ? 'Completed' : 'Not Completed' %>
+                        </td>
+                        <td>
+                            <% if (!todo.isComplete) { %>
+                                <form action="/complete/<%= todo.id %>" method="POST" style="display:inline;">
+                                    <button type="submit">Complete</button>
+                                </form>
+                                <% } %>
+                                    <form action="/delete/<%= todo.id %>" method="POST" style="display:inline;">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+</body>
+
+</html>
